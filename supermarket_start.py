@@ -28,12 +28,14 @@ class Supermarket:
         """
         hour = 7 + self.minutes // 60
         minutes = self.minutes % 60
-        timestamp = f'{hour:02d}:{minutes:02d}' # 02d enforces that there is a leading zero if just one digit
+        timestamp = f"{hour:02d}:{minutes:02d}" 
         return timestamp
 
     def print_customers(self):
-        """print all customers with the current time and id in CSV format.
+        """print all customers with the current time, id, location in CSV format.
         """
+        for customer in self.customers:
+            print(f"{self.get_time()}, {customer.id}, {customer.location}")
         return None
 
     def next_minute(self):
@@ -41,7 +43,7 @@ class Supermarket:
         """
         self.minutes = self.minutes + 1
         for customer in self.customers:
-            customer.next_location
+            customer.next_location()
         return None
     
     def add_new_customers(self):
