@@ -68,7 +68,7 @@ class Supermarket:
         """
         
         # if wanted, controll Number of executions
-        for _ in n:
+        for _ in range(n):
             # exclusion list to secure unique numbers
             number_taken = []
             unique = False
