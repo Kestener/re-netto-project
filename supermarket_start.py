@@ -10,18 +10,25 @@ class Supermarket:
     """manages multiple Customer instances that are currently in the market.
     """
 
-    def __init__(self, name):        
+######### Initiation with possible own open times ##### 
+
+    def __init__(self,brand = 're-netto', open='07:00', closed = '22:00'):
         # a list of Customer objects
         self.customers = []
         self.minutes = 0
         self.last_id = 0
-        self.name = name
+        self.name = brand
+        self.opening_time = open
+        self.closing_time = closed 
 
+#####  Added __repr__ by GK
     def __repr__(self):
-        return ''
-    
+        return f'''This is a supermarket object of the brand {self.name}. 
+                It is opened from {self.opening_time} to {self.closing_time}'''  
+
+#####  Added parmameter closing time by GK
     def is_open(self):
-        return self.get_time() != '22:00'
+        return self.get_time() != self.closing_time
 
     def get_time(self):
         """current time in HH:MM format,
@@ -45,11 +52,6 @@ class Supermarket:
         for customer in self.customers:
             customer.next_location()
         return None
-    
-    def add_new_customers(self):
-        """randomly creates new customers.
-        """
-        return None
 
     def remove_exitsting_customers(self):
         """removes every customer that is not active any more"""
@@ -60,4 +62,23 @@ class Supermarket:
             else:
                 self.customers.remove(customer)
 
-
+##### Added new customer by GK
+    def add_new_customers(self,n = 1):
+        """randomly creates new customers.
+        """
+        
+        # if wanted, controll Number of executions
+        for _ in n:
+            # exclusion list to secure unique numbers
+            number_taken = []
+            unique = False
+            for customer in self.customers:
+                number_taken.append(customer.customer_no)
+            # loop while number is not unique
+            while not unique:
+                number = np.random.choice(range(9999))
+                # if number not taken, create a customer with it
+                if number not in number_taken:
+                    self.customers.append(Customer(number))
+                    unique = True
+        return None
