@@ -50,8 +50,12 @@ class Supermarket:
         return None
 
     def remove_exitsting_customers(self):
-        """removes every customer that is not active any more.
-        """
-        return None
+        """removes every customer that is not active any more"""
+        for customer in self.customers:
+            customer.is_active() #Call is_active method for each customer in the list, which should return True or False
+            if customer.active:
+                pass
+            else:
+                self.customers.remove(customer)
 
 
