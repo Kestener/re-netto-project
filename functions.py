@@ -46,6 +46,39 @@ def to_minute(df):
     # resampled_df = pd.to_datetime(resampled_df['timestamp'])
     return resampled_df.reset_index()
 
+
+##################### Add entrance location to minute-1 timestamp ####################
+def add_entrance(df):
+    """This fuction takes a dataframe, identifies the first position for each customer id
+    and returns a dataframe with the entrance location one minute before the first recorded observation.
+    
+    Args:
+        df (pd.Dataframe): A dataframe of customer data within the re-netto supermarket. 
+        Expected columns: customer_no, timestamp, location
+
+    Returns:
+        pd.Dataframe: The same dataframe with entrance location rows included for each id."""
+
+    # group by original dataframe by customer id
+    grouped = df.groupby('customer_no')
+    # initialize new DataFrame to hold results
+    entrance_df = pd.DataFrame()
+    
+    # iterate over each customer id group
+    for name, group in grouped:
+        # sort the group by timestamp
+        group = group.sort_values('timestamp')
+        # get the first timestamp for this customer id
+        first_timestamp = group.iloc[0]['timestamp']
+        # subtract one minute from the first timestamp
+        new_timestamp = first_timestamp - timedelta(minutes=1)
+        # create a new row with the adjusted timestamp and add entrance to the location
+        new_row = pd.DataFrame({'customer_no': name, 'timestamp': new_timestamp, 'location':'entrance'}, index=[0])
+        # append the new row to the new DataFrame. Using ignore index to not use them in the concatenation axis.
+        entrance_df = pd.concat([entrance_df, new_row, group], ignore_index=True)
+    
+    return entrance_df
+
 #################### Create missing checkouts for late customers ########################
 
 def do_checkout(df):
