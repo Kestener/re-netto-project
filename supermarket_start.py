@@ -42,7 +42,7 @@ class Supermarket:
         """print all customers with the current time, id, location in CSV format.
         """
         for customer in self.customers:
-            print(f"{self.get_time()}, {customer.id}, {customer.location}")
+            print(f"{self.get_time()}, {customer.customer_no}, {customer.location}")
         return None
 
     def next_minute(self):
@@ -50,7 +50,7 @@ class Supermarket:
         """
         self.minutes = self.minutes + 1
         for customer in self.customers:
-            customer.next_location()
+            customer.move()
         return None
 
     def remove_exitsting_customers(self):
