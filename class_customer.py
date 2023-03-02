@@ -10,10 +10,10 @@ class Customer:
         #### Adding variable for visualisation
         self.geo = [np.random.choice(range(70,120)),np.random.choice(range(0,15))]
         self.probs = {"checkout" : [1, 0, 0, 0, 0, 0],
-                    "dairy" : [0.095, 0.599, 0.052, 0.104, 0.085,0.065],
-                    "drinks" : [0.139, 0.101, 0.455, 0.115, 0.095, 0.094],
+                    "dairy" : [0.095, 0.598, 0.053, 0.104, 0.085,0.065],
+                    "drinks" : [0.139, 0.101, 0.455, 0.115, 0.095, 0.095],
                     "entrance" : [0.169, 0.253, 0.153, 0.033, 0.265, 0.127],
-                    "fruit" : [0.137, 0.115, 0.078, 0.149, 0.466, 0.056],
+                    "fruit" : [0.136, 0.115, 0.078, 0.149, 0.466, 0.056],
                     "spices" : [0.125, 0.190, 0.147, 0.138, 0.108, 0.292]
                     }
         
@@ -56,10 +56,3 @@ class Customer:
             print('Error: A checked out customer tries to move')
             return None
             
-
-#%% 
-c = Customer(123)
-for list in c.probs:
-    print(list)
-    #print(sum(list))
-# %%
