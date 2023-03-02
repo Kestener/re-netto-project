@@ -5,6 +5,7 @@ Start with this to implement the supermarket simulator.
 import numpy as np
 import pandas as pd
 from class_customer import Customer
+import csv
 
 class Supermarket:
     """manages multiple Customer instances that are currently in the market.
@@ -38,11 +39,18 @@ class Supermarket:
         timestamp = f"{hour:02d}:{minutes:02d}" 
         return timestamp
 
-    def print_customers(self):
+    def print_customers(self, to_csv=False):
         """print all customers with the current time, id, location in CSV format.
+        params: to_csv True/False to output the results to a csv file. It takes
+        the simulation name defined on Brand for the file name and append the results.
         """
         for customer in self.customers:
             print(f"{self.get_time()}, {customer.customer_no}, {customer.location}")
+            if to_csv:
+                row = [self.get_time(),customer.customer_no,customer.location]
+                with open(f're-netto-project/data/{self.name}_simulation.csv', 'a') as file:
+                    writer = csv.writer(file)
+                    writer.writerow(row)
         return None
 
     def next_minute(self):
