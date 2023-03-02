@@ -1,34 +1,34 @@
 """
-Start with this to implement the supermarket simulator.
+Module of Supermarket class for the Markov chain simulation.
 """
 
-import numpy as np
-import pandas as pd
-from class_customer import Customer
 import csv
+import numpy as np
+from class_customer import Customer
+
 
 class Supermarket:
     """manages multiple Customer instances that are currently in the market.
     """
 
-######### Initiation with possible own open times ##### 
-
-    def __init__(self,brand = 're-netto', open='07:00', closed = '22:00'):
+######### Initiation with possible own open times #####
+    def __init__(self,brand = 're-netto', start='07:00', closed='22:00'):
         # a list of Customer objects
         self.customers = []
         self.minutes = 0
         self.last_id = 0
         self.name = brand
-        self.opening_time = open
-        self.closing_time = closed 
+        self.opening_time = start
+        self.closing_time = closed
 
 #####  Added __repr__ by GK
     def __repr__(self):
-        return f'''This is a supermarket object of the brand {self.name}. 
-                It is opened from {self.opening_time} to {self.closing_time}'''  
+        return f'''This is a supermarket object of the brand {self.name}.
+                It is opened from {self.opening_time} to {self.closing_time}'''
 
 #####  Added parmameter closing time by GK
     def is_open(self):
+        """Method to check if the supermarket is open"""
         return self.get_time() != self.closing_time
 
     def get_time(self):
@@ -36,7 +36,7 @@ class Supermarket:
         """
         hour = 7 + self.minutes // 60
         minutes = self.minutes % 60
-        timestamp = f"{hour:02d}:{minutes:02d}" 
+        timestamp = f"{hour:02d}:{minutes:02d}"
         return timestamp
 
     def print_customers(self, to_csv=False):
@@ -48,10 +48,10 @@ class Supermarket:
             print(f"{self.get_time()}, {customer.customer_no}, {customer.location}")
             if to_csv:
                 row = [self.get_time(),customer.customer_no,customer.location]
-                with open(f're-netto-project/data/{self.name}_simulation.csv', 'a') as file:
+                with open(f're-netto-project/data/{self.name}_simulation.csv', 'a',
+                        encoding='UTF8') as file:
                     writer = csv.writer(file)
                     writer.writerow(row)
-        return None
 
     def next_minute(self):
         """propagates all customers to the next state.
@@ -59,24 +59,21 @@ class Supermarket:
         self.minutes = self.minutes + 1
         for customer in self.customers:
             customer.move()
-        return None
 
     def remove_exitsting_customers(self):
         """removes every customer that is not active any more"""
         for customer in self.customers:
-            customer.is_active() #Call is_active method for each customer in the list, which should return True or False
+            customer.is_active()
             if customer.active:
                 pass
             else:
                 self.customers.remove(customer)
 
 ##### Added new customer by GK
-    def add_new_customers(self,n = 1):
-        """randomly creates new customers.
-        """
-        
+    def add_new_customers(self, cust_number=1):
+        """randomly creates new customers."""
         # if wanted, controll Number of executions
-        for _ in range(n):
+        for _ in range(cust_number):
             # exclusion list to secure unique numbers
             number_taken = []
             unique = False
@@ -89,4 +86,3 @@ class Supermarket:
                 if number not in number_taken:
                     self.customers.append(Customer(number))
                     unique = True
-        return None
