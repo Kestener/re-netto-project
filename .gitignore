@@ -1,8 +1,15 @@
 # Byte-compiled / optimized / DLL files
-__pycache__/
+__pycache__
 *.py[cod]
 *$py.class
 .pyc
+
+# no graphics
+.png
+.gif
+output.gif
+/figures 
+test.ipynb
 
 # C extensions
 *.so
