@@ -10,13 +10,14 @@ class Customer:
         #### Adding variable for visualisation
         self.geo_x = np.random.choice(range(70,120))
         self.geo_y = np.random.choice(range(0,15))
-        self.probs = {"checkout" : [1, 0, 0, 0, 0, 0],
-                    "dairy" : [0.095, 0.598, 0.053, 0.104, 0.085,0.065],
-                    "drinks" : [0.139, 0.101, 0.455, 0.115, 0.095, 0.095],
-                    "entrance" : [0.169, 0.253, 0.153, 0.033, 0.265, 0.127],
-                    "fruit" : [0.136, 0.115, 0.078, 0.149, 0.466, 0.056],
-                    "spices" : [0.125, 0.190, 0.147, 0.138, 0.108, 0.292]
+        self.probs = {"checkout" : [1, 0, 0, 0, 0,],
+                    "dairy" : [0.103, 0.737, 0.059, 0.050, 0.051],
+                    "drinks" : [0.216, 0.0110000000000001, 0.598, 0.088, 0.087],
+                    "entrance" : [0.000, 0.288, 0.154, 0.377, 0.181],
+                    "fruit" : [0.202, 0.096, 0.055, 0.597, 0.050],
+                    "spices" : [0.151, 0.193, 0.163, 0.091, 0.402]
                     }
+        
         
     def __repr__(self):
         return f'This is customer number {self.customer_no} at {self.location}'
@@ -34,12 +35,12 @@ class Customer:
             None: The tuple self.geo will be adapted with random numbers within a threshholded location
         """
         #### Constant dictionary representing X and Y values ranges on the later supermarket plot
-        LOCATION_COORDINATES = {"checkout": [0,60,0,10],
-                                "dairy": [35,50,25,45],
-                                "drinks":[8,21,25,45],
-                                "entrance":[85,110,0,10],
-                                "fruit": [90,105,25,45],
-                                "spices": [65,78,25,45],
+        LOCATION_COORDINATES = {"checkout": [0,50,0,10],
+                                "dairy": [38,45,25,45],
+                                "drinks":[10,21,25,45],
+                                "entrance":[90,100,0,10],
+                                "fruit": [90,100,25,45],
+                                "spices": [68,78,25,45],
                                 }
         #### If location did not change, keep your location, else get assigned new locations randomly 
         # (based on the valid coordinate ranges of the location itself)
@@ -51,7 +52,7 @@ class Customer:
     def move(self):
         if self.active:
             self.prior_location = self.location
-            self.location = np.random.choice(["checkout","dairy","drinks","entrance","fruit","spices"],p=self.probs[self.location])
+            self.location = np.random.choice(["checkout","dairy","drinks","fruit","spices"],p=self.probs[self.location])
             self.update_geolocation()
             return None
         else:

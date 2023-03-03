@@ -16,8 +16,8 @@ if __name__ == "__main__":
 #%%
 plot = PlotMarket(frames=1)
 plot.create_plots()
-plot.create_giph()
+#plot.create_giph()
 # %%
-plot = PlotMarket(frames=1)
-plot.create_giph()
+#plot = PlotMarket(frames=1)
+#plot.create_giph()
 # %%

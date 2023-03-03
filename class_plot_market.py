@@ -26,20 +26,16 @@ class PlotMarket:
         counter = 0
         df = pd.read_csv(self.input_file)
         PATH = "market.png"
-        
-            
+          
         img = plt.imread(PATH)
 
         for _ in df["time"].unique():
-            plt.axis((0, 120, 0, 60))
-            plt.imshow(img, extent=[-5, 120, -2, 60])
+            
             time = self.get_time()
-            print(time)
-            print(df[df['time'] == time].head())
             X = df[df['time'] == time]['x'].values
             y = df[df['time'] == time]['y'].values
-            print(f'coordinates X {X}')
-            print(f'coordinates y {y}')
+            plt.axis((0, 120, 0, 60))
+            plt.imshow(img, extent=[-5, 120, -2, 60])
             plt.scatter(x=X,y=y, s=100)
             plt.savefig(fname = f'{self.output_path}/market{counter}.png', dpi=72, format="png", bbox_inches='tight', pad_inches=0.5)
             print(f'saved to {self.output_path}/market{counter}.png')
