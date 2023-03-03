@@ -45,7 +45,7 @@ class Supermarket:
         the simulation name defined on Brand for the file name and append the results.
         """
         for customer in self.customers:
-            print(f"{self.get_time()}, {customer.customer_no}, {customer.location}")
+            print(f"{self.get_time()}, {customer.customer_no}, {customer.location},{customer.geo_x},{customer.geo_y}")
             if to_csv:
                 row = [self.get_time(),customer.customer_no,customer.location]
                 with open(f're-netto-project/data/{self.name}_simulation.csv', 'a',

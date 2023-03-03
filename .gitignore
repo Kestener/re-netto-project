@@ -4,6 +4,13 @@ __pycache__
 *$py.class
 .pyc
 
+# no graphics
+.png
+.gif
+output.gif
+/figures 
+test.ipynb
+
 # C extensions
 *.so
 

@@ -122,15 +122,9 @@ def create_next_location(df):
         pd.Dataframe: returns the same dataframe with an added column for next locations.
     """
     df_test = df.copy()
-    states = df_test['location'].unique()
-    temp_list = [np.nan]
-    for element in states:
-        temp_list.append(element)
-    df_test.sort_values(by = 'customer_no', inplace=True)
-    df_test['next_location'] = df_test['location'].shift(-1)
-    df_temp = df_test[df_test['location']=='checkout'].copy()
-    df_temp['next_location'].replace(to_replace = temp_list, value='checkout',inplace=True)
-    df_final = pd.concat([df_temp, df_test[df_test['location']!='checkout']],ignore_index=True)
-    df_final.sort_values(by = 'timestamp', inplace=True)
-    df_final.sort_values(by = 'customer_no', inplace=True)
-    return df_final
+    df_test.reset_index(inplace = True)
+    df_test.sort_values('timestamp',inplace=True)
+    df_test['next_location'] = df_test.groupby('customer_no')['location'].shift(-1)
+    df_test['next_location'].replace(to_replace = np.nan, value='checkout',inplace=True)
+    df_test.sort_values('timestamp',inplace=True)
+    return df_test
